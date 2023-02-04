@@ -1,0 +1,58 @@
+#map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+ion-modal {
+    --border-radius: 10px 10px 0 0;
+}
+
+.travelModes {
+    position: fixed;
+    background-color: #ffffff;
+    z-index: 1;
+    border-radius: 100px;
+
+    ion-buttons {
+        ion-button {
+            font-size: 12px;
+        }
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 35px;
+    background: #ffffff;
+    border-radius: 100px;
+    width: 90%;
+    left: 50%;
+    transform: translate(-50%, 0px);
+
+    ion-col {
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        ion-note,
+        ion-text {
+            font-size: 12px;
+        }
+
+        .routes {
+            display: inline;
+            background: var(--ion-color-light);
+            padding: 3px 10px;
+            border-radius: 100px;
+            color: var(--ion-color-medium);
+
+            .active {
+                color: var(--ion-color-primary);
+            }
+        }
+    }
+}
