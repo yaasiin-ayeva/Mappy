@@ -2,14 +2,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 
 const mapboxgl = require('mapbox-gl');
-const access_token = 'pk.eyJ1IjoiY21lZGlhbGlua3MiLCJhIjoiY2xkb3EyNzloMDE5eDNvcGIzamYwODNmMiJ9.DG_9OmSau77jkazt3dnYLg';
+const access_token = 'pk.eyJ1IjoiY21lZGlhbGlua3MiLCJhIjoiY2xkb3BxZTFtMHYzdTNwbjBhN2NrOGI1ZSJ9.L67JzDSl2zWqApX69QgZhA';  // Some public mapbox api key
 
 const startPosition = {
   long: 0,
   lat: 0
 }
 
-const endPosition = startPosition;
+const endPosition = {
+  long: 0,
+  lat: 0
+};
 
 @Component({
   selector: 'app-routes',
@@ -40,19 +43,39 @@ export class RoutesPage implements OnInit {
   }
 
   loadMap() {
-    mapboxgl.accessToken = access_token;
-    this.map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-0.10153989181986844, 51.497635790108916], // starting position
-      zoom: 14
+
+    let center: number[];
+    navigator.geolocation.getCurrentPosition(position => {
+      console.log('Position', position.coords);
+      center = [ position.coords.longitude, position.coords.latitude];
+      mapboxgl.accessToken = access_token;
+      this.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: center, // starting position
+        zoom: 14
+      });
     });
+
+
     // set the bounds of the map
     const bounds = [
       [-123.069003, 45.395273],
       [-122.303707, 45.612333]
     ];
     this.map.setMaxBounds(bounds);
+
+    // this.map.addControl(
+    //   new mapboxgl.GeolocateControl({
+    //     positionOptions: {
+    //       enableHighAccuracy: true
+    //     },
+    //     // When active the map will receive updates to the device's location as it changes.
+    //     trackUserLocation: true,
+    //     // Draw an arrow next to the location dot to indicate which direction the device is heading.
+    //     showUserHeading: true
+    //   })
+    // );
 
     // an arbitrary start will always be the same
     // only the end or destination will change
@@ -154,12 +177,15 @@ export class RoutesPage implements OnInit {
     // an arbitrary start will always be the same
     // only the end or destination will change
     mapboxgl.accessToken = access_token;
+    console.log(JSON.stringify(endPosition));
 
     const query = await fetch(
       `https://api.mapbox.com/directions/v5/mapbox/${this.mode}/${startPosition.long},${startPosition.lat};${endPosition.long},${endPosition.lat}?steps=true&alternatives=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
       { method: 'GET' }
     );
     this.routeData = await query.json();
+    console.log('routeData', this.routeData);
+
     this.drawRoute();
   }
 
