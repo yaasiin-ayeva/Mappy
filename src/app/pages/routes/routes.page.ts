@@ -2,7 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 
 const mapboxgl = require('mapbox-gl');
-const access_token = 'pk.eyJ1IjoiY21lZGlhbGlua3MiLCJhIjoiY2xkb3EyNzloMDE5eDNvcGIzamYwODNmMiJ9.DG_9OmSau77jkazt3dnYLg';
+// Private token
+// const access_token = 'pk.eyJ1IjoiY21lZGlhbGlua3MiLCJhIjoiY2xkb3EyNzloMDE5eDNvcGIzamYwODNmMiJ9.DG_9OmSau77jkazt3dnYLg';
+
+// Public token
+const access_token = 'pk.eyJ1IjoiY21lZGlhbGlua3MiLCJhIjoiY2xkb3BxZTFtMHYzdTNwbjBhN2NrOGI1ZSJ9.L67JzDSl2zWqApX69QgZhA';
 
 const startPosition = {
   long: 0,
@@ -48,11 +52,11 @@ export class RoutesPage implements OnInit {
       zoom: 14
     });
     // set the bounds of the map
-    const bounds = [
-      [-123.069003, 45.395273],
-      [-122.303707, 45.612333]
-    ];
-    this.map.setMaxBounds(bounds);
+    // const bounds = [
+    //   [-123.069003, 45.395273],
+    //   [-122.303707, 45.612333]
+    // ];
+    // this.map.setMaxBounds(bounds);
 
     // an arbitrary start will always be the same
     // only the end or destination will change
